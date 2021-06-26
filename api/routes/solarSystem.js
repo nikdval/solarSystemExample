@@ -33,6 +33,11 @@ function getPlanets() {
     return [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
 }
 
+/**
+ * GET a planet
+ * @param {string} name -  planet name 
+ * @returns {object}
+ */
 function getPlanet(name) {
     //Query DB in future
 
