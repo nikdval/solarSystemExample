@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './layout/App';
-import reportWebVitals from './reportWebVitals';
-
+import { Provider } from "react-redux";
 import "normalize.css";
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 
+import './index.css';
+import App from './layout/App';
+import reportWebVitals from './reportWebVitals';
+import store from './store/store';
+
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
