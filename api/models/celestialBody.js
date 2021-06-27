@@ -4,6 +4,11 @@ class CelestialBody {
         this.picture = picture;
         this.age = age;
         this.mass = mass;
+        this.imageUri = null;
+    }
+
+    getImageUri(host){
+        this.imageUri = `http://${host}/images/planets/${this.picture}`
     }
 }
 
