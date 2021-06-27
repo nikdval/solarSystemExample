@@ -1,9 +1,10 @@
 .solar-system_section{
-
+    padding: 20px;
     .solar-system_planets{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content:flex-start;
     }
 
 }
