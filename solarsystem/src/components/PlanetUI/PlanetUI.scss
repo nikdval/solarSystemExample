@@ -1,0 +1,36 @@
+@import "src/assets/styles/sass/utils";
+
+.planet {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0 15px 15px 15px;
+    @include bp-tablet-landscape-up {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 400px;
+        flex-grow: 1;
+        max-width: 33%;
+    } 
+
+    .planet_information{
+        @include bp-tablet-landscape-up {
+            // width: 60%;
+            flex-grow: 2;
+        } 
+
+        h2{
+            text-align: left;
+        }
+    }
+    .planet_picture{
+        max-height: 200px;
+        width: auto;
+        height: auto;
+        background-color: aquamarine;
+        @include bp-tablet-landscape-up {
+            max-width: 40%;
+            flex-grow:1;
+        } 
+    }
+}

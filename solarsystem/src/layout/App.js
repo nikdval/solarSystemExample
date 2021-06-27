@@ -9,11 +9,9 @@ function App() {
       <header className="app_header">
        <h1>Solar System</h1>
       </header>
-      <body>
         <Router>
           <SolarSystem path={"/"} />
         </Router>
-      </body>
     </div>
   );
 }
