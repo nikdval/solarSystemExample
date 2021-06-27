@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { solarSystemLoad } from '../../store/solarSystemActions';
 import PlanetUI from '../../components/PlanetUI/PlanetUI';
+import './SolarSystem.scss';
 
 const SolarSystem = (props) =>{
     const dispatch = useDispatch();
@@ -11,11 +12,15 @@ const SolarSystem = (props) =>{
         dispatch(solarSystemLoad());
     },[dispatch]);
 
-    if(!planets || planets.length === 0 ) return <p>No Available data</p>
-   
+    if(!planets || planets.length === 0 ) return <p>No Available data</p>;
+    
+    const planetsView = planets.map( planetData => {
+        return <PlanetUI key={planetData.name} planet={planetData} />;
+    });
+    
     return (
-        <section>
-            <PlanetUI planet={planets[2]}/>
+        <section className="solar-system_section">
+            <div className="solar-system_planets">{planetsView}</div>
         </section>
     )
 }
