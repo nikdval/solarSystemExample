@@ -17,7 +17,7 @@ router.get("/:planet", function (req, res, next) {
 // Planet instances - REMOVE after connect with DB
 const mercury = new CelestialBody("Mercury", "", 4.503, "3.285 × 10^23");
 const venus = new CelestialBody("Venus", "", 4.503, "4.867 × 10^24");
-const earth = new CelestialBody("Earth", "", 4.543, "5.972 × 10^24");
+const earth = new CelestialBody("Earth", "/The_Earth_seen_from_Apollo_17.jpg", 4.543, "5.972 × 10^24");
 const mars = new CelestialBody("Mars", "", 4.603, "6.39 × 10^23");
 const jupiter = new CelestialBody("Jupiter", "", 4.603, "1.898 × 10^27");
 const saturn = new CelestialBody("Saturn", "", 4.503, "5.683 × 10^26");
