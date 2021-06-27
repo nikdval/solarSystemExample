@@ -20,7 +20,6 @@
     }
     .planet_picture{
         width: 100%;
-        height: 120px;
         background-color: aquamarine;
         @include bp-tablet-landscape-up {
             width: 40%;

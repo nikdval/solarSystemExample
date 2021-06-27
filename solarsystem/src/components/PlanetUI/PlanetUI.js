@@ -24,6 +24,7 @@ const PlanetUI = ({planet})=>{
             </tr>
         )
     })
+
     return (
         <div className="planet">
             <div className="planet_information">
@@ -32,7 +33,7 @@ const PlanetUI = ({planet})=>{
                     <tbody>{rows}</tbody>
                 </table>
             </div>
-            <img className="planet_picture" src={planet.picture} />
+            <img className="planet_picture" src={planet.imageUri} alt={planet.name} />
         </div>
     )
 }
