@@ -4,10 +4,15 @@ import { solarSystemLoad } from '../../store/solarSystemActions';
 import PlanetUI from '../../components/PlanetUI/PlanetUI';
 import './SolarSystem.scss';
 
+/**
+ * Solar System page
+ * no props needed
+ */
 const SolarSystem = (props) =>{
     const dispatch = useDispatch();
     const planets = useSelector(state=> state.solar.planets);
-
+   
+    // Load data once
     useEffect(()=>{
         dispatch(solarSystemLoad());
     },[dispatch]);

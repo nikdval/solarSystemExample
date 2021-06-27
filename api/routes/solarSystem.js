@@ -29,6 +29,22 @@ const saturn = new CelestialBody("Saturn", "Saturn_and_its_3_moons.jpg", 4.503, 
 const uranus = new CelestialBody("Uranus", "Uranus_true_colour.jpg", 4.503, "8.681 × 10^25");
 const neptune = new CelestialBody("Neptune", "Neptune_-_Voyager_2_(29347980845)_flatten_crop.jpg", 4.503, "1.024 × 10^26");
 
+
+/**
+ * Generates url for the images to be used in img src
+ * @param {string} host 
+ */
+ function createImageUri(host){
+    mercury.getImageUri(host);
+    venus.getImageUri(host);
+    earth.getImageUri(host);
+    mars.getImageUri(host);
+    jupiter.getImageUri(host);
+    saturn.getImageUri(host);
+    uranus.getImageUri(host);
+    neptune.getImageUri(host);
+}
+
 /**
  * GET all planets
  * @returns array
@@ -39,16 +55,7 @@ function getPlanets() {
     return [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
 }
 
-async function createImageUri(host){
-    mercury.getImageUri(host);
-    venus.getImageUri(host);
-    earth.getImageUri(host);
-    mars.getImageUri(host);
-    jupiter.getImageUri(host);
-    saturn.getImageUri(host);
-    uranus.getImageUri(host);
-    neptune.getImageUri(host);
-}
+
 /**
  * GET a planet
  * @param {string} name -  planet name 

@@ -14,6 +14,10 @@ const metadata = [
      }
  ]
 
+/**
+ * Planet display
+ * @param {object} planet 
+ */
 const PlanetUI = ({planet})=>{
     const rows = [];
     metadata.map(item=>{
