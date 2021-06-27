@@ -1,0 +1,10 @@
+@import "src/assets/styles/sass/utils";
+
+.planet {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0 15px 15px 15px;
+    @include bp-tablet-landscape-up {
+        width: 40%;
+    } 
+}
