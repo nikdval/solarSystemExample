@@ -5,18 +5,21 @@ var router = express.Router();
 var CelestialBody = require('../models/celestialBody');
 
 router.get("/", function (req, res, next) {
-    // GET url for images
     const host = req.headers.host
-    createImageUri(host);
-
-    const planents = getPlanets(host);
-    res.send(planents);
-    
+    getPlanets(host)
+    .then((data)=>{
+        res.send(data);
+    })
+    .catch(next);   
 })
 
 router.get("/:planet", function (req, res, next) {
-    const requestPlanet = getPlanet(req.params.planet)
-    res.send(requestPlanet);
+    const host = req.headers.host
+    getPlanet(req.params.planet, host)
+    .then((data)=>{
+        res.send(data);
+    })
+    .catch(next); 
 })
 
 // Planet instances - REMOVE after connect with DB
@@ -49,9 +52,9 @@ const neptune = new CelestialBody("Neptune", "Neptune_-_Voyager_2_(29347980845)_
  * GET all planets
  * @returns array
  */
-function getPlanets() {
+async function getPlanets(host) {
     //Query DB in future
-
+    createImageUri(host);
     return [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
 }
 
@@ -61,25 +64,33 @@ function getPlanets() {
  * @param {string} name -  planet name 
  * @returns {object}
  */
-function getPlanet(name) {
+async function getPlanet(name, host) {
     //Query DB in future
 
     switch (name) {
         case "mercury":
+            mercury.getImageUri(host);
             return mercury;
         case "venus":
+            venus.getImageUri(host);
             return venus;
         case "earth":
+            earth.getImageUri(host);
             return earth;
         case "mars":
+            mars.getImageUri(host);
             return mars;
         case "jupiter":
+            jupiter.getImageUri(host);
             return jupiter;
         case "saturn":
+            saturn.getImageUri(host);
             return saturn;
         case "uranus":
+            uranus.getImageUri(host);
             return uranus;
         case "neptune":
+            neptune.getImageUri(host);
             return neptune;
         default:
             return "This planet doesn't exist";

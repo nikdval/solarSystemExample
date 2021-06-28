@@ -1,12 +1,10 @@
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
-
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../app');
 let should = chai.should();
-
 
 chai.use(chaiHttp);
 
@@ -38,6 +36,7 @@ describe('Planet', () => {
                     res.body.should.have.property("picture");
                     res.body.should.have.property("age").eql(4.503);
                     res.body.should.have.property("mass").eql("3.285 × 10^23");
+                    res.body.should.have.property("imageUri").eql(`http://${res.request.host}/images/planets/Mercury_in_true_color.jpg`);
                     done();
                 });
         });
