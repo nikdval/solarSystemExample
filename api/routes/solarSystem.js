@@ -4,11 +4,23 @@ import CelestialBody from '../models/celestialBody';
 
 const router = express.Router();
 
+// /solarSystem?page=${page}&limit=${limit}
 router.get("/", function (req, res, next) {
     const host = req.headers.host;
-    getPlanets(host)
+
+    //Pagenation
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;// The fallback can be any number or no limit
+    const offset = (page - 1) * limit;
+    console.log(page,limit);
+
+    getPlanets(host,limit,offset)
         .then((data) => {
-            res.send(data);
+            res.send({
+                page: page,
+                limit: limit || "no limit",
+                data: data
+            });
         })
         .catch(next);
 })
@@ -22,8 +34,7 @@ router.get("/:planet", function (req, res, next) {
                 console.log(planet.name);
                 return planet.name.toUpperCase() == req.params.planet.toUpperCase();
             });
-            console.log(requestPlanet);
-            res.send(requestPlanet);
+            res.send(requestPlanet[0]);
         })
         .catch(next);
     // getPlanet(req.params.planet, host)
@@ -63,10 +74,11 @@ function createImageUri(host) {
  * GET all planets
  * @returns array
  */
-async function getPlanets(host) {
+async function getPlanets(host,limit,offset) {
     //Query DB in future
+    //In case of the database the query will include the limit and the offset
     createImageUri(host);
-    return [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
+    return [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune].slice(offset,limit);
 }
 
 
