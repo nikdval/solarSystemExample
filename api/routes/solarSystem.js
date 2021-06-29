@@ -28,10 +28,9 @@ router.get("/", function (req, res, next) {
 router.get("/:planet", function (req, res, next) {
     const host = req.headers.host;
     // Filter form planets array.
-    getPlanets(req.params.planet, host)
+    getPlanets(host)
         .then((data) => {
             const requestPlanet = data.filter((planet)=>{
-                console.log(planet.name);
                 return planet.name.toUpperCase() == req.params.planet.toUpperCase();
             });
             res.send(requestPlanet[0]);
@@ -60,6 +59,7 @@ const neptune = new CelestialBody("Neptune", "Neptune_-_Voyager_2_(29347980845)_
  * @param {string} host 
  */
 function createImageUri(host) {
+    console.log(host)
     mercury.getImageUri(host);
     venus.getImageUri(host);
     earth.getImageUri(host);
@@ -78,7 +78,10 @@ async function getPlanets(host,limit,offset) {
     //Query DB in future
     //In case of the database the query will include the limit and the offset
     createImageUri(host);
-    return [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune].slice(offset,limit);
+    const planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
+    if(!limit || !offset) return planets;
+    if(!offset) return planets.slice(limit);
+    return planets.slice(offset,limit);
 }
 
 
