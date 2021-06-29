@@ -1,4 +1,5 @@
-import {SOLAR_LOAD} from './solarSystemActions';
+import { LOAD_BEGIN, API_ERROR} from './utilities'
+import { SOLAR_LOAD_SUCCESS } from './solarSystemActions';
 
 const initialState = {
     planets:[],
@@ -8,18 +9,18 @@ const initialState = {
   
   const solarSystemReducer = function (state = initialState, action) {
     switch (action.type) {
-        case SOLAR_LOAD.BEGIN:
+        case LOAD_BEGIN:
             return {
                 ...state,
                 loading:true
             };
-        case SOLAR_LOAD.SUCCESS:
+        case SOLAR_LOAD_SUCCESS:
             return {
                 ...state,
                 loading:false,
                 planets: action.planets
             }
-        case SOLAR_LOAD.ERROR:
+        case API_ERROR:
             return {
                 ...state,
                 loading:false,
