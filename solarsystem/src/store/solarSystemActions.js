@@ -13,7 +13,7 @@ export const solarSystemLoad = () => {
         .then((response) => {
           return dispatch({
             type: SOLAR_LOAD.SUCCESS,
-            planets: response.data,
+            planets: response.data.data,
           });
         })
         .catch((error) => {
