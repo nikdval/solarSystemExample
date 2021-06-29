@@ -22,12 +22,16 @@ describe("Solar System Actions", () => {
     it("dispatches SOLAR_LOAD action and returns data on success", async () => {
         mockAxios.get.mockImplementationOnce(() =>
             Promise.resolve({
-                data: [{
-                    name: "Test Planet",
-                    picture: "test_picture.js",
-                    age: 10,
-                    mass: "4 x 10^23"
-                }]
+                data: {
+                    page: 1,
+                    limit: 20,
+                    data: [{
+                        name: "Test Planet",
+                        picture: "test_picture.js",
+                        age: 10,
+                        mass: "4 x 10^23"
+                    }]
+                }
             })
         );
 
