@@ -1,8 +1,8 @@
-var express = require("express");
-const { request } = require("../app");
-var router = express.Router();
+import express from "express";
+import { request } from "../app";
+import CelestialBody from '../models/celestialBody';
 
-var CelestialBody = require('../models/celestialBody');
+const router = express.Router();
 
 router.get("/", function (req, res, next) {
     const host = req.headers.host
@@ -97,4 +97,5 @@ async function getPlanet(name, host) {
     }
 }
 
-module.exports = router;
+
+export default router;
