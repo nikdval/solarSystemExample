@@ -1,11 +1,12 @@
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../app');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../app';
 let should = chai.should();
 
+const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('Planet', () => {
@@ -18,8 +19,11 @@ describe('Planet', () => {
                 .get('/solarSystem')
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('array');
-                    res.body.length.should.be.eql(8);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('page');
+                    res.body.should.have.property('limit');
+                    res.body.data.should.be.a('array');
+                    res.body.data.length.should.be.eql(8);
                     done();
                 });
         });

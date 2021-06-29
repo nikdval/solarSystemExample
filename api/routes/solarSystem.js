@@ -1,25 +1,46 @@
-var express = require("express");
-const { request } = require("../app");
-var router = express.Router();
+import express from "express";
+import { request } from "../app";
+import CelestialBody from '../models/celestialBody';
 
-var CelestialBody = require('../models/celestialBody');
+const router = express.Router();
 
+// /solarSystem?page=${page}&limit=${limit}
 router.get("/", function (req, res, next) {
-    const host = req.headers.host
-    getPlanets(host)
-    .then((data)=>{
-        res.send(data);
-    })
-    .catch(next);   
+    const host = req.headers.host;
+
+    //Pagenation
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;// The fallback can be any number or no limit
+    const offset = (page - 1) * limit;
+    console.log(page,limit);
+
+    getPlanets(host,limit,offset)
+        .then((data) => {
+            res.send({
+                page: page,
+                limit: limit || "no limit",
+                data: data
+            });
+        })
+        .catch(next);
 })
 
 router.get("/:planet", function (req, res, next) {
-    const host = req.headers.host
-    getPlanet(req.params.planet, host)
-    .then((data)=>{
-        res.send(data);
-    })
-    .catch(next); 
+    const host = req.headers.host;
+    // Filter form planets array.
+    getPlanets(host)
+        .then((data) => {
+            const requestPlanet = data.filter((planet)=>{
+                return planet.name.toUpperCase() == req.params.planet.toUpperCase();
+            });
+            res.send(requestPlanet[0]);
+        })
+        .catch(next);
+    // getPlanet(req.params.planet, host)
+    // .then((data)=>{
+    //     res.send(data);
+    // })
+    // .catch(next); 
 })
 
 // Planet instances - REMOVE after connect with DB
@@ -37,7 +58,8 @@ const neptune = new CelestialBody("Neptune", "Neptune_-_Voyager_2_(29347980845)_
  * Generates url for the images to be used in img src
  * @param {string} host 
  */
- function createImageUri(host){
+function createImageUri(host) {
+    console.log(host)
     mercury.getImageUri(host);
     venus.getImageUri(host);
     earth.getImageUri(host);
@@ -52,10 +74,14 @@ const neptune = new CelestialBody("Neptune", "Neptune_-_Voyager_2_(29347980845)_
  * GET all planets
  * @returns array
  */
-async function getPlanets(host) {
+async function getPlanets(host,limit,offset) {
     //Query DB in future
+    //In case of the database the query will include the limit and the offset
     createImageUri(host);
-    return [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
+    const planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
+    if(!limit || !offset) return planets;
+    if(!offset) return planets.slice(limit);
+    return planets.slice(offset,limit);
 }
 
 
@@ -97,4 +123,5 @@ async function getPlanet(name, host) {
     }
 }
 
-module.exports = router;
+
+export default router;
