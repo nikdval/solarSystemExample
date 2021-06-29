@@ -5,21 +5,32 @@ import CelestialBody from '../models/celestialBody';
 const router = express.Router();
 
 router.get("/", function (req, res, next) {
-    const host = req.headers.host
+    const host = req.headers.host;
     getPlanets(host)
-    .then((data)=>{
-        res.send(data);
-    })
-    .catch(next);   
+        .then((data) => {
+            res.send(data);
+        })
+        .catch(next);
 })
 
 router.get("/:planet", function (req, res, next) {
-    const host = req.headers.host
-    getPlanet(req.params.planet, host)
-    .then((data)=>{
-        res.send(data);
-    })
-    .catch(next); 
+    const host = req.headers.host;
+    // Filter form planets array.
+    getPlanets(req.params.planet, host)
+        .then((data) => {
+            const requestPlanet = data.filter((planet)=>{
+                console.log(planet.name);
+                return planet.name.toUpperCase() == req.params.planet.toUpperCase();
+            });
+            console.log(requestPlanet);
+            res.send(requestPlanet);
+        })
+        .catch(next);
+    // getPlanet(req.params.planet, host)
+    // .then((data)=>{
+    //     res.send(data);
+    // })
+    // .catch(next); 
 })
 
 // Planet instances - REMOVE after connect with DB
@@ -37,7 +48,7 @@ const neptune = new CelestialBody("Neptune", "Neptune_-_Voyager_2_(29347980845)_
  * Generates url for the images to be used in img src
  * @param {string} host 
  */
- function createImageUri(host){
+function createImageUri(host) {
     mercury.getImageUri(host);
     venus.getImageUri(host);
     earth.getImageUri(host);
