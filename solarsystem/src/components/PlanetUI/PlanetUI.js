@@ -32,12 +32,12 @@ const PlanetUI = ({planet})=>{
     return (
         <div className="planet">
             <div className="planet_information">
-                <h2 className="planet_information-title">{planet.name}</h2>
-                <table className="planet_information-table">
+                <h2>{planet.name}</h2>
+                <table >
                     <tbody>{rows}</tbody>
                 </table>
             </div>
-            <img className="planet_picture" src={planet.imageUri} alt={planet.name} />
+            <img src={planet.imageUri} alt={planet.name} />
         </div>
     )
 }
