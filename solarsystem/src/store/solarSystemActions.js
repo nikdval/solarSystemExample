@@ -1,23 +1,22 @@
-import axios from 'axios';
+import apiConsumer from './utilities/apiConsumer';
 
-export const SOLAR_LOAD = {
-    BEGIN: "SOLAR_LOAD_BEGIN",
-    SUCCESS: "SOLAR_LOAD_SUCCESS",
-    ERROR: "SOLAR_LOAD_ERROR",
-};
+export const SOLAR_LOAD_SUCCESS = "SOLAR_LOAD_SUCCESS";
 
 export const solarSystemLoad = () => {
-    return (dispatch) => {
-      dispatch({ type: SOLAR_LOAD.BEGIN });
-      axios.get("/solarSystem")
-        .then((response) => {
-          return dispatch({
-            type: SOLAR_LOAD.SUCCESS,
-            planets: response.data.data,
-          });
-        })
-        .catch((error) => {
-          return dispatch({ type: SOLAR_LOAD.ERROR, error });
-        });
-    };
-  };
+  return (dispatch) => apiConsumer({
+    dispatch,
+    url: "/solarSystem",
+    onSuccess: solarLoadSuccess,
+    onFailure: () => console.log("Error occured loading planets"),
+    load: true
+  });
+
+
+};
+
+const solarLoadSuccess = (response) => {
+  return {
+    type: SOLAR_LOAD_SUCCESS,
+    planets: response.data,
+  }
+}

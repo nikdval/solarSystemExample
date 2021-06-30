@@ -5,7 +5,11 @@ import promise from 'redux-promise-middleware';
 
 import { solarSystemLoad } from './solarSystemActions'
 
-jest.mock('axios');
+jest.mock('axios', () => {
+    return {
+      request: jest.fn(() => Promise.resolve({ data: "mocked" })),
+    };
+  });
 const mockStore = configureMockStore([thunk,promise]);
 
 describe("Solar System Actions", () => {
@@ -20,7 +24,7 @@ describe("Solar System Actions", () => {
     });
 
     it("dispatches SOLAR_LOAD action and returns data on success", async () => {
-        mockAxios.get.mockImplementationOnce(() =>
+        mockAxios.request.mockImplementationOnce(() =>
             Promise.resolve({
                 data: {
                     page: 1,
@@ -39,7 +43,7 @@ describe("Solar System Actions", () => {
         const actions = store.getActions();
 
         expect.assertions(3);
-        expect(actions[0].type).toEqual("SOLAR_LOAD_BEGIN");
+        expect(actions[0].type).toEqual("LOAD_BEGIN");
         expect(actions[1].type).toEqual("SOLAR_LOAD_SUCCESS");
         expect(actions[1].planets[0].name).toEqual("Test Planet");
     });
